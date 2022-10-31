@@ -5,22 +5,24 @@ import 'package:solid/models/user_model.dart';
 extension NoteEX on NoteModel {
   String toDBUpdate() {
     return 'UPDATE ${DBStringsManager.notesTable} '
-        'SET ${DBStringsManager.notesUserId} = ?'
-        'SET ${DBStringsManager.notesTitle} = ?'
-        'SET ${DBStringsManager.noteIsDone} = ?'
+        'SET ${DBStringsManager.notesUserId} = ?,'
+        ' ${DBStringsManager.notesTitle} = ?,'
+        ' ${DBStringsManager.noteIsDone} = ?'
         'WHERE ${DBStringsManager.notesId} = ?';
   }
 
-  List<dynamic> toValues() => [userId, title,1, id];
+  List<dynamic> toValues() => [userId, title, completed == true ? 1 : 0, id];
 
-  String toInsert() {
-    String names = '${DBStringsManager.notesUserId},'
-        ' ${DBStringsManager.notesTitle},'
-        ' ${DBStringsManager.noteIsDone}';
-    String values = '"$userId", "$title", "$completed"';
-    return 'INSERT INTO ${DBStringsManager.notesTable}($names) VALUES($values)';
-  }
-}
+
+
+
+String toInsert() {
+  String names = '${DBStringsManager.notesUserId},'
+      ' ${DBStringsManager.notesTitle},'
+      ' ${DBStringsManager.noteIsDone}';
+  String values = '"$userId", "$title", "$completed"';
+  return 'INSERT INTO ${DBStringsManager.notesTable}($names) VALUES($values)';
+}}
 
 extension UserEx on UserModel {
   String toInsertQuery() {

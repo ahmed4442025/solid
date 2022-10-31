@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:solid/models/user_model.dart';
 import 'package:solid/presentation/utilm/utilm.dart';
 import 'package:solid/app/extensions.dart';
 import '../../controllers/home_cubit.dart';
@@ -70,10 +69,10 @@ class TodoList extends StatelessWidget {
                   onTap: () => _cubit.deleteNote(todoModel.id.orZero()),
                   child: const Icon(Icons.delete_forever)),
             // update
-            // if (_cubit.canEdit)
-            //   InkWell(
-            //       onTap: () => _cubit.updateNote(todoViewSett.userId,todoModel.id.orZero()),
-            //       child: const Icon(Icons.edit)),
+            if (_cubit.canEdit)
+              InkWell(
+                  onTap: () => _cubit.updateNote(todoViewSett.userId,todoModel.id.orZero()),
+                  child: const Icon(Icons.edit)),
             Text(todoModel.title.orEmpty()),
             // Checkbox(value: todoModel.completed, onChanged: null),
           ],
