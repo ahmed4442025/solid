@@ -20,7 +20,7 @@ String toInsert() {
   String names = '${DBStringsManager.notesUserId},'
       ' ${DBStringsManager.notesTitle},'
       ' ${DBStringsManager.noteIsDone}';
-  String values = '"$userId", "$title", "$completed"';
+  String values = '"$userId", "$title", "${completed == true ? 1 : 0}"';
   return 'INSERT INTO ${DBStringsManager.notesTable}($names) VALUES($values)';
 }}
 
@@ -29,7 +29,6 @@ extension UserEx on UserModel {
     String names = '${DBStringsManager.usersUsername},'
         ' ${DBStringsManager.usersEmail}';
     String values = '"$username", "$email"';
-    print('INSERT INTO ${DBStringsManager.usersTable}($names) VALUES($values)');
     return 'INSERT INTO ${DBStringsManager.usersTable}($names) VALUES($values)';
   }
 }

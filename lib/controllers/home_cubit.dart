@@ -18,15 +18,14 @@ class HomeCubit extends Cubit<HomeState> {
   final GetDataRepository _dataRepository;
   final RepoControl? _control;
 
-  late List<NoteModel> lisTodo;
-  late List<UserModel> lisUsers;
-  late List<PostModel> lisPosts;
+  List<NoteModel> lisTodo = [];
+  List<UserModel> lisUsers = [];
+  List<PostModel> lisPosts = [];
   bool canEdit = false;
 
   Future<void> init() async {
     // _tempGenerate();
     await _getData();
-    print(lisTodo[0].completed);
     // _test();
   }
 
@@ -97,10 +96,10 @@ class HomeCubit extends Cubit<HomeState> {
     emit(HomeInsertUser());
   }
 
-  void updateNote(int userId, int noteId) async {
+  void updateNote(int userId, int noteId, [bool? value]) async {
     if (_canControll()) return;
-    NoteModel note =
-        NoteModel(userId, noteId, _getRandomString(15), _rnd.nextBool());
+    NoteModel note = NoteModel(
+        userId, noteId, _getRandomString(15), value ?? _rnd.nextBool());
     await _control!.updateNote(note);
     _getData();
     emit(HomeInsertUser());
@@ -110,9 +109,9 @@ class HomeCubit extends Cubit<HomeState> {
 
   List<NoteModel> getUserById(int id) {
     UserModel user = UserModel();
-    lisUsers.forEach((element) {
+    for (var element in lisUsers) {
       if (element.id == id) user = element;
-    });
+    }
     return user.getNotes(lisTodo);
   }
 

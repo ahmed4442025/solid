@@ -11,6 +11,6 @@ class DBStringsManager {
   static const String notesTable = "notes";
   static const String notesTitle = "title";
   static const String notesUserId = "userId";
-  static const String noteIsDone = "isdone";
+  static const String noteIsDone = "completed";
   static const String notesId = "id";
 }

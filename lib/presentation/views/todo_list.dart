@@ -14,9 +14,7 @@ class TodoList extends StatelessWidget {
   Widget build(BuildContext context) {
     _cubit = HomeCubit.get(context);
     return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {
-        print(state);
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(title: const Text("Notes")),
@@ -30,15 +28,16 @@ class TodoList extends StatelessWidget {
   FloatingActionButton? btAdd() {
     return _cubit.canEdit
         ? FloatingActionButton(
-            onPressed: () {
-              _cubit.addNote(todoViewSett.userId);
-            },
-            child: Icon(Icons.add),
-          )
+      onPressed: () {
+        _cubit.addNote(todoViewSett.userId);
+      },
+      child: Icon(Icons.add),
+    )
         : null;
   }
 
-  Widget myBody() => Column(
+  Widget myBody() =>
+      Column(
         children: [
           UtilM.box20(),
           Expanded(
@@ -48,14 +47,17 @@ class TodoList extends StatelessWidget {
                   itemBuilder: (c, i) =>
                       oneTodo(_cubit.getUserById(todoViewSett.userId)[i]),
                   separatorBuilder: (c, i) => UtilM.box15(),
-                  itemCount: _cubit.getUserById(todoViewSett.userId).length),
+                  itemCount: _cubit
+                      .getUserById(todoViewSett.userId)
+                      .length),
             ),
           ),
         ],
       );
 
   // one todoWidget
-  Widget oneTodo(NoteModel todoModel) => Container(
+  Widget oneTodo(NoteModel todoModel) =>
+      Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         decoration: BoxDecoration(
             color: Colors.grey.shade200,
@@ -71,10 +73,15 @@ class TodoList extends StatelessWidget {
             // update
             if (_cubit.canEdit)
               InkWell(
-                  onTap: () => _cubit.updateNote(todoViewSett.userId,todoModel.id.orZero()),
+                  onTap: () =>
+                      _cubit.updateNote(
+                          todoViewSett.userId, todoModel.id.orZero()),
                   child: const Icon(Icons.edit)),
             Text(todoModel.title.orEmpty()),
-            // Checkbox(value: todoModel.completed, onChanged: null),
+            Checkbox(
+                value: todoModel.completed, onChanged: _cubit.canEdit ? (v) {
+              _cubit.updateNote(todoViewSett.userId, todoModel.id.orZero(),v);
+            } : null),
           ],
         ),
       );

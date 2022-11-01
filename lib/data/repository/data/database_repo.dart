@@ -17,7 +17,7 @@ class DatabaseRepo implements GetDataRepository {
     try {
       List<Map<String, dynamic>> res = await _database
           .rawQuery('SELECT * FROM ${DBStringsManager.notesTable}');
-      return right(res.map((e) => NoteModel.fromJson(e)).toList());
+      return right(res.map((e) => NoteModel.fromJson(e, true)).toList());
     } catch (error) {
       return Left(Failure(-1, "db error"));
     }
@@ -38,6 +38,4 @@ class DatabaseRepo implements GetDataRepository {
       return Left(Failure(-1, "db error"));
     }
   }
-
-
 }

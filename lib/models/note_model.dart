@@ -6,11 +6,11 @@ class NoteModel {
 
   NoteModel(this.userId, this.id, this.title, this.completed);
 
-  NoteModel.fromJson(Map<String, dynamic> json) {
+  NoteModel.fromJson(Map<String, dynamic> json, [bool fromDB = false]) {
     userId = json['userId'];
     id = json['id'];
     title = json['title'];
-    completed = json['completed'];
+    completed = fromDB ? json['completed'] == 1 : json['completed'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,7 +21,6 @@ class NoteModel {
     data['completed'] = completed;
     return data;
   }
-
 }
 
 extension noteEX on NoteModel {}
